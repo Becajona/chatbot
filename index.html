@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chatbox {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        #userInput {
+            width: 80%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        #sendBtn {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatbot con IA</h1>
+
+    <div id="chatbox"></div>
+    
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
+    <button id="sendBtn">Enviar</button>
+
+    <script>
+
+
+
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            const userMessage = document.getElementById('userInput').value;
+            if (userMessage.trim() !== "") {
+                // Mostrar el mensaje del usuario en el chatbox
+                const chatbox = document.getElementById('chatbox');
+                chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
+
+                // Limpiar el campo de entrada
+                document.getElementById('userInput').value = '';
+
+                // Enviar el mensaje al servidor
+                fetch('http://127.0.0.1:5000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar la respuesta del chatbot
+                    chatbox.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+                    chatbox.scrollTop = chatbox.scrollHeight;  // Desplazar hacia abajo
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
