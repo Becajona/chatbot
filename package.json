@@ -6,11 +6,11 @@
     "express": "^4.21.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "name": "chatboot",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
