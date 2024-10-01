@@ -25,6 +25,28 @@
             padding: 10px 20px;
         }
     </style>
+    <script type="module">
+        // Importa Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+
+        // Configuración de tu aplicación Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaGaqkFjt11rjCZ2tscCy3YimzJV_gido",
+            authDomain: "jonalogic-c8ecf.firebaseapp.com",
+            projectId: "jonalogic-c8ecf",
+            storageBucket: "jonalogic-c8ecf.appspot.com",
+            messagingSenderId: "67802613164",
+            appId: "1:67802613164:web:37579fb27c06b11dde6609"
+        };
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); // Conecta a Firestore
+
+        // Muestra que Firestore está inicializado
+        console.log('Firestore inicializado:', db);
+    </script>
 </head>
 <body>
     <h1>Chatbot con IA</h1>
@@ -34,51 +56,44 @@
     <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
     <button id="sendBtn">Enviar</button>
 
+    <script>
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            const userMessage = document.getElementById('userInput').value;
+            if (userMessage.trim() !== "") {
+                const chatbox = document.getElementById('chatbox');
+                chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
+                document.getElementById('userInput').value = '';
 
-    <script type="module" src="firebase-firestore.js"></script>
+                fetch('https://chatbot-production-fbcb.up.railway.app/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    chatbox.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+                    chatbox.scrollTop = chatbox.scrollHeight; // Desplazar hacia abajo
 
-
-    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js"></script>
-
-<script>
-    
-
-
-document.getElementById('sendBtn').addEventListener('click', function() {
-    const userMessage = document.getElementById('userInput').value;
-    if (userMessage.trim() !== "") {
-        // Mostrar el mensaje del usuario en el chatbox
-        const chatbox = document.getElementById('chatbox');
-        chatbox.innerHTML += `<p><strong>Tú:</strong> ${userMessage}</p>`;
-
-        // Limpiar el campo de entrada
-        document.getElementById('userInput').value = '';
-
-        // Enviar el mensaje al servidor
-        fetch('https://chatbot-production-fbcb.up.railway.app/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: userMessage }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Mostrar la respuesta del chatbot
-            chatbox.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
-            chatbox.scrollTop = chatbox.scrollHeight;  // Desplazar hacia abajo
-        })
-        .catch(error => {
-            console.error('Error:', error);
+                    // Guarda la conversación en Firestore
+                    addDoc(collection(db, "conversaciones"), {
+                        userMessage: userMessage,
+                        botResponse: data.response,
+                        timestamp: new Date() // Guarda la fecha y hora
+                    })
+                    .then(() => {
+                        console.log('Conversación guardada exitosamente en Firestore');
+                    })
+                    .catch((error) => {
+                        console.error('Error al guardar la conversación en Firestore:', error);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al recibir respuesta del chatbot:', error);
+                });
+            }
         });
-    }
-});
-</script>
-
-
-
-
-
+    </script>
 </body>
 </html>
