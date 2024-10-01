@@ -3,7 +3,6 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
 
 // Middleware para parsear JSON y configurar CORS
 app.use(express.json());
@@ -46,6 +45,7 @@ app.post('/chat', async (req, res) => {
         res.status(500).json({ error: 'Failed to get response from API' });
     }
 });
+const PORT = process.env.PORT || 3000;  // Usa el puerto asignado por Railway o 3000 como fallback
 
 // Iniciar el servidor
 app.listen(PORT, () => {
