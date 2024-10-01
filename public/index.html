@@ -56,7 +56,7 @@ document.getElementById('sendBtn').addEventListener('click', function() {
         document.getElementById('userInput').value = '';
 
         // Enviar el mensaje al servidor
-        fetch('http://127.0.0.1:3300/chat', {
+        fetch('https://chatbot-production-fbcb.up.railway.app/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
