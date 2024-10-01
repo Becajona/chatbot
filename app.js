@@ -1,18 +1,16 @@
-require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware para parsear JSON y configurar CORS
 app.use(express.json());
 app.use(cors());
 
-// Servir archivos estáticos desde la carpeta "public"
-app.use(express.static(path.join(__dirname, 'public')));
+
+const  API_KEY = 'AIzaSyAxj6XnMi3RAGmDvJvpJbc22IGZZo1DKIM'; // Reemplaza por tu API key
+const URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
 // Ruta para el chatbot
 app.post('/chat', async (req, res) => {
@@ -36,7 +34,7 @@ app.post('/chat', async (req, res) => {
                 'Content-Type': 'application/json'
             },
             params: {
-                key: process.env.API_KEY
+                key: API_KEY
             }
         });
 
@@ -47,6 +45,7 @@ app.post('/chat', async (req, res) => {
         res.status(500).json({ error: 'Failed to get response from API' });
     }
 });
+const PORT = process.env.PORT || 3000;  // Usa el puerto asignado por Railway o 3000 como fallback
 
 // Iniciar el servidor
 app.listen(PORT, () => {
