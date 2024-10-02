@@ -5,28 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot IA</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
         #chatbox {
-            width: 100%;
             height: 300px;
             border: 1px solid #ccc;
             padding: 10px;
             overflow-y: auto;
-        }
-        #userInput {
-            width: 80%;
-            padding: 10px;
-            margin-right: 10px;
-        }
-        #sendBtn {
-            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
         .message {
             margin-top: 20px;
         }
+
+        /* Personalización del input y el botón */
+    #userInput {
+        height: 60px; /* Hacer el input más alto */
+        font-size: 1.2rem; /* Aumentar el tamaño del texto */
+        border-radius: 10px 0 0 10px; /* Bordes redondeados solo en la izquierda */
+        border: 2px solid #007bff; /* Borde azul */
+    }
+
+    #sendBtn {
+        height: 60px; /* Hacer el botón más alto */
+        font-size: 1.2rem; /* Aumentar el tamaño del texto */
+        border-radius: 0 10px 10px 0; /* Bordes redondeados solo en la derecha */
+        background-color: #2894a7; /* Cambiar el color del botón a verde */
+        border: 2px solid #28a745; /* Borde verde */
+        transition: background-color 0.3s ease; /* Transición suave en hover */
+    }
+
+    #sendBtn:hover {
+        background-color: #218838; /* Color del botón al pasar el cursor */
+        border-color: #218838; /* Cambiar borde en hover */
+    }
+
     </style>
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js';
@@ -91,13 +104,24 @@
         });
     </script>
 </head>
-<body>
-    <h1>Chatbot con IA</h1>
+<body class="container"></body>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center my-4">Chatbot IA</h1>
 
-    <div id="chatbox"></div>
-    
-    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
-    <button id="sendBtn">Enviar</button>
-    <div class="message"></div>
+            <div id="chatbox" class="mb-3"></div>
+
+            <div class="input-group">
+                <input type="text" id="userInput" class="form-control" placeholder="Escribe tu mensaje aquí...">
+                <button id="sendBtn" class="btn">Enviar</button>
+            </div>
+
+
+            <div class="message"></div>
+        </div>
+    </div>
+
+    <!-- Agregar Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
