@@ -18,7 +18,7 @@
             margin-top: 20px;
         }
 
-        /* Personalización del input y el botón */
+          /* Personalización del input y el botón */
     #userInput {
         height: 60px; /* Hacer el input más alto */
         font-size: 1.2rem; /* Aumentar el tamaño del texto */
@@ -30,14 +30,31 @@
         height: 60px; /* Hacer el botón más alto */
         font-size: 1.2rem; /* Aumentar el tamaño del texto */
         border-radius: 0 10px 10px 0; /* Bordes redondeados solo en la derecha */
-        background-color: #2894a7; /* Cambiar el color del botón a verde */
-        border: 2px solid #28a745; /* Borde verde */
+        background-color: #288ea7; /* Cambiar el color del botón a verde */
+        border: 2px solid #286ea7; /* Borde verde */
         transition: background-color 0.3s ease; /* Transición suave en hover */
     }
 
     #sendBtn:hover {
         background-color: #218838; /* Color del botón al pasar el cursor */
         border-color: #218838; /* Cambiar borde en hover */
+    }
+
+    /* Estilo para el texto "Powered by" */
+    .powered-by {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #6c757d; /* Color gris */
+    }
+
+    .powered-by a {
+        color: #007bff; /* Enlace azul */
+        text-decoration: none; /* Sin subrayado */
+    }
+
+    .powered-by a:hover {
+        text-decoration: underline; /* Subrayado al pasar el cursor */
     }
 
     </style>
@@ -107,13 +124,18 @@
 <body class="container"></body>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1 class="text-center my-4">Chatbot IA</h1>
+            <h1 class="text-center my-4">Chatbot</h1>
 
             <div id="chatbox" class="mb-3"></div>
 
             <div class="input-group">
                 <input type="text" id="userInput" class="form-control" placeholder="Escribe tu mensaje aquí...">
                 <button id="sendBtn" class="btn">Enviar</button>
+            </div>
+
+            <!-- Agregar "Powered by Alumnos de la UTP" -->
+            <div class="powered-by">
+                Powered by <a href="#">Alumnos de la UTP</a>
             </div>
 
 
